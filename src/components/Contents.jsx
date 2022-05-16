@@ -20,10 +20,10 @@ end`)();
     setString(event.target.value);
   };
   return (
-    <div className="container my-5">
+    <div className="container my-4">
       <h1><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Lua-Logo.svg/600px-Lua-Logo.svg.png?20150107024942" height="60px" width="70px" alt="lua"/>  Lua Patterns: Match, Test & Build</h1>
       <hr />
-      <div style={{ width: "1100px" }} className="input-group mb-3">
+      <div style={{width: "1100px" }} className="input-group mb-3">
         <input
           onChange={onChangePatterns}
           id="patterns"
@@ -43,7 +43,7 @@ end`)();
       <div style={{display: "flex"}}>
       <textarea
         onChange={onChangeString}
-        style={{ width: "600px"}}
+        style={{ width: "600px", resize: "none", borderColor: "#222428"}}
         placeholder="Enter your string here to be matched"
         aria-label="Enter your string here to be matched"
         className="form-control"
@@ -51,7 +51,7 @@ end`)();
         rows="8"
       ></textarea>
       <textarea
-        style={{ height: "300px", width: "500px", borderColor: result?"green":"blue"}}
+        style={{ resize: "none", height: "300px", width: "500px", borderColor: result?"green":"blue"}}
         placeholder="Your result will be displayed here; currently no matches"
         aria-label="Your result will be displayed here; currently no matches"
         className="form-control mx-3"
