@@ -2,3 +2,7 @@
 body {
     font-family: 'Poppins';
 }
+mark{
+    background: green;
+    color: black;
+}
