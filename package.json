@@ -12,6 +12,7 @@
     "github-fork-ribbon-css": "^0.2.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-highlight-words": "^0.18.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "mark.js": "^8.11.1"
   }
 }

@@ -10,17 +10,17 @@ function Menu() {
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
       <a className="nav-link active" aria-current="page" href="/">
-              <i class="fa fa-house-user" style={{fontSize:"20px"}}></i> Home
+              <i className="fa fa-house-user" style={{fontSize:"20px"}}></i> Home
               </a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="https://github.com/renisal"><i class="fa fa-user" style={{fontSize:"20px"}}></i> Creator</a>
+        <a className="nav-link" href="https://github.com/renisal"><i className="fa fa-user" style={{fontSize:"20px"}}></i> Creator</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="https://github.com/renisal/react-lua-patterns"><i class="fa fa-code-fork" style={{fontSize:"20px"}}></i> Source</a>
+        <a className="nav-link" href="https://github.com/renisal/react-lua-patterns"><i className="fa fa-code-fork" style={{fontSize:"20px"}}></i> Source</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="https://github.com/renisal?tab=repositories"><i class="fa fa-angles-right" style={{fontSize:"20px"}}></i> More Apps</a>
+        <a className="nav-link" href="https://github.com/renisal?tab=repositories"><i className="fa fa-angles-right" style={{fontSize:"20px"}}></i> More Apps</a>
       </li>
     </ul>
   </div>
