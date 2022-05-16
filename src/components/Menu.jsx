@@ -15,7 +15,7 @@ function Menu() {
         <a className="nav-link" href="https://github.com/renisal">Creator</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="https://github.com/renisal/rens-lua-patterns">Source</a>
+        <a className="nav-link" href="https://github.com/renisal/react-lua-patterns">Source</a>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="https://github.com/renisal?tab=repositories">More Apps</a>
