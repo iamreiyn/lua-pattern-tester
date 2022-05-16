@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.b4979c4a.css","mappings":"iFACA,KACI,mBACJ","sources":["index.css"],"sourcesContent":["@import \"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700\";\r\nbody {\r\n    font-family: 'Poppins';\r\n}"],"names":[],"sourceRoot":""}
