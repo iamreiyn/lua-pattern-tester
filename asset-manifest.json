@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-lua-patterns/static/css/main.b4979c4a.css",
-    "main.js": "/react-lua-patterns/static/js/main.ce136334.js",
+    "main.js": "/react-lua-patterns/static/js/main.8a8dcb1b.js",
     "index.html": "/react-lua-patterns/index.html",
     "main.b4979c4a.css.map": "/react-lua-patterns/static/css/main.b4979c4a.css.map",
-    "main.ce136334.js.map": "/react-lua-patterns/static/js/main.ce136334.js.map"
+    "main.8a8dcb1b.js.map": "/react-lua-patterns/static/js/main.8a8dcb1b.js.map"
   },
   "entrypoints": [
     "static/css/main.b4979c4a.css",
-    "static/js/main.ce136334.js"
+    "static/js/main.8a8dcb1b.js"
   ]
 }
