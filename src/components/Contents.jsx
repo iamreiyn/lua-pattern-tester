@@ -4,7 +4,7 @@ const Highlighter = require("react-highlight-words");
 
 function Contents() {
   const [string, setString] = useState("");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("ˍnilˍ");
   const [pattern, setPat] = useState("");
 
   const onChangePatterns = (event) => {
@@ -57,7 +57,7 @@ function Contents() {
           <span
             className="input-group-text"
             id="basic-addon2"
-            style={{ color: "blue" }}
+            style={{ color: string.match(result[0])?"green":"blue" }}
           >
             <strong>Patterns</strong>
           </span>
@@ -78,7 +78,7 @@ function Contents() {
           style={{
             width: "600px",
             height: "330px",
-            borderColor: result ? "green" : "blue",
+            borderColor: string.match(result[0])?"green":"blue"
           }}
         >
           <div className="card-body">
