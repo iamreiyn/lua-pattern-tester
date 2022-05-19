@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Do Hyeon
+- Font Author: Copyright 2018 The Do Hyeon Project Authors
+- Font Source: http://fonts.gstatic.com/s/dohyeon/v16/TwMN-I8CRRU2zM86HFE3ZwaH__-C.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
