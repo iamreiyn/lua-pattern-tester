@@ -1,7 +1,7 @@
-function Menu() {
+function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-  <img className="mx-3" src="https://i.postimg.cc/5ynzMQD0/rens.png" alt="Ren's Lua Patterns"/>
+  <h1 className="mx-3" style={{color: "#1543ad"}}>Lua</h1> <h1 className="text-white">Pattern Tester</h1>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -17,7 +17,7 @@ function Menu() {
         <a className="nav-link" href="https://github.com/renisal"><i className="fa fa-user" style={{fontSize:"20px"}}></i> Creator</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="https://github.com/renisal/react-lua-patterns"><i className="fa fa-code-fork" style={{fontSize:"20px"}}></i> Source</a>
+        <a className="nav-link" href="https://github.com/renisal/lua-pattern-tester"><i className="fa fa-code-fork" style={{fontSize:"20px"}}></i> Source</a>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="https://github.com/renisal?tab=repositories"><i className="fa fa-angles-right" style={{fontSize:"20px"}}></i> More Apps</a>
@@ -28,4 +28,4 @@ function Menu() {
     );
 }
 
-export default Menu;
+export default Navbar;
