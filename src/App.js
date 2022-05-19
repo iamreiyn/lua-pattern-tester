@@ -1,12 +1,12 @@
-import Contents from "./components/Contents";
-import Menu from "./components/Menu";
+import Main from "./components/Main";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
-     <Menu/>
-     <Contents/>
+     <Navbar/>
+     <Main/>
      <Footer/>
     </div>
   );

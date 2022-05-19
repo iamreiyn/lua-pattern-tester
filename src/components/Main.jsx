@@ -2,7 +2,7 @@ const { useState } = require("react");
 const fengari = require("fengari-web");
 const Highlighter = require("react-highlight-words");
 
-function Contents() {
+function Main() {
   const [string, setString] = useState("");
   const [result, setResult] = useState("ˍnilˍ");
   const [pattern, setPat] = useState("");
@@ -18,6 +18,8 @@ function Contents() {
     let ret = func.call(string, pattern);
     setResult(ret);
   };
+
+
   const onChangeString = (event) => {
     setString(event.target.value);
     let string = event.target.value;
@@ -28,17 +30,16 @@ function Contents() {
     end`)();
     let ret = func.call(string, pattern);
     setResult(ret);
+
+    // ssssssssssssssssss
+
+
+    console.log("hey".find("Hello", "Yellow"))
   };
 
   return (
     <div className="container my-4">
       <h1>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Lua-Logo.svg/600px-Lua-Logo.svg.png?20150107024942"
-          height="60px"
-          width="65px"
-          alt="lua"
-        />{" "}
         Lua Patterns: Match, Debug & Build
       </h1>
       <hr />
@@ -104,4 +105,4 @@ function Contents() {
   );
 }
 
-export default Contents;
+export default Main;
