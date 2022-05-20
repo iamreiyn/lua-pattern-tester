@@ -31,7 +31,7 @@ function Navbar() {
             backgroundColor: menu ? "darkblue" : "#d3d3d3",
             fontSize: "30px",
           }}
-        ></i>
+        ></i> <label className="badgeCustom">Switch</label>
       </h1>
       {menu ? <NavbarChild2 /> : <NavbarChild3 />}
     </nav>
