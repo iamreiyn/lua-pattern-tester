@@ -1,6 +1,6 @@
 {
   "homepage": "https://renisal.github.io/lua-pattern-tester",
-  "name": "rens-lua-patterns",
+  "name": "lua-pattern-tester",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

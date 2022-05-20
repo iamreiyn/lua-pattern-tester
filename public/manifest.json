@@ -1,6 +1,6 @@
 {
-  "short_name": "Rens Lua Patterns",
-  "name": "Rens Lua Patterns: Match, Test & Build",
+  "short_name": "Lua Pattern Tester",
+  "name": "Lua Pattern Tester: Match, Test & Build Lua Patterns",
   "icons": [
     {
       "src": "favicon.ico",

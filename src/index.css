@@ -1,8 +1,41 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-    font-family: 'Poppins';
+  font-family: "Poppins";
+  background: rgb(24, 27, 39);
 }
-mark{
-    background: green;
-    color: black;
+mark {
+  background: rgb(24, 27, 39);
+  color: #d3d3d3;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px;
+  padding: 10px;
+  margin-top: 100px;
+}
+
+.try {
+  position: absolute;
+  left: 52rem;
+}
+
+.active {
+  background: rgb(24, 27, 39);
+  border-radius: 20%;
+  color: #d3d3d3;
+  margin-right: 5px;
+}
+
+a:hover {
+  color: green;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+}
+
+strong {
+  font-weight: bold;
 }
