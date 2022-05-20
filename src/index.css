@@ -28,6 +28,14 @@ mark {
   margin-right: 5px;
 }
 
+.badgeCustom {
+    font-size: xx-small;
+color: #d3d3d3;
+    position: relative;
+    bottom: 23px;
+    left: -10px;
+  }
+
 a:hover {
   color: green;
 }
