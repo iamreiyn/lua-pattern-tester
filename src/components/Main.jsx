@@ -19,7 +19,6 @@ function Main() {
     setResult(ret);
   };
 
-
   const onChangeString = (event) => {
     setString(event.target.value);
     let string = event.target.value;
@@ -30,70 +29,75 @@ function Main() {
     end`)();
     let ret = func.call(string, pattern);
     setResult(ret);
-
-    // ssssssssssssssssss
-
-
-    console.log("hey".find("Hello", "Yellow"))
   };
 
   return (
-    <div className="container my-4">
-      <h1>
-        Lua Patterns: Match, Debug & Build
-      </h1>
-      <hr />
-      <div style={{ width: "1100px" }} className="input-group mb-3">
+    <div className="container my-4 center">
+      <div style={{ width: "685px" }} className="input-group mb-3">
         <input
           onChange={onChangePatterns}
+          style={{ backgroundColor: "#d3d3d3" }}
           id="patterns"
           type="text"
           className="form-control"
           placeholder="Lua Patterns"
           aria-label="Lua Patterns"
           aria-describedby="basic-addon2"
-          disabled={!string ? true : false}
         />
         <div className="input-group-append">
           <span
             className="input-group-text"
             id="basic-addon2"
-            style={{ color: string.match(result[0])?"green":"blue" }}
+            style={{
+              borderBottomLeftRadius: "0px",
+              borderTopLeftRadius: "0px",
+              backgroundColor: "#d3d3d3",
+              color: string.match(result[0]) ? "green" : "blue",
+            }}
           >
-            <strong>Patterns</strong>
+            <strong>
+              {string.match(result[0]) ? "Matches" : "No Matches"}
+            </strong>
           </span>
         </div>
       </div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", width: "700px" }}>
         <textarea
           onChange={onChangeString}
-          style={{ width: "600px", resize: "none", borderColor: "#222428" }}
+          style={{
+            resize: "none",
+            width: "50rem",
+            borderColor: "#222428",
+            backgroundColor: "#d3d3d3",
+          }}
           placeholder="Enter your string here to be matched"
           aria-label="Enter your string here to be matched"
           className="form-control"
           id="myBoxwhite"
           rows="8"
         ></textarea>
+
         <div
           className="card mx-3"
           style={{
-            width: "600px",
-            height: "330px",
-            borderColor: string.match(result[0])?"green":"blue"
+            backgroundColor: "#d3d3d3",
+            width: "50rem",
+            height: "20rem",
           }}
         >
           <div className="card-body">
-            <p className="card-text">
+            <p
+              className="card-text"
+              style={{ marginTop: "-10px", marginLeft: "-3px" }}
+            >
               <Highlighter
+                style={{ color: string ? "black" : "#696969" }}
                 highlightClassName="highlitedString"
                 searchWords={result.split("ˍ")}
-                activeIndex={1}
                 caseSensitive={true}
                 autoEscape={true}
                 textToHighlight={
-                  string
-                    ? string
-                    : "Your result will be displayed here; currently no matches"
+                  string ? string : "Your result will be displayed here"
                 }
               />
             </p>
