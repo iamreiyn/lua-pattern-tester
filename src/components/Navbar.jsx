@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NavbarChild2 from "./NavbarChild2";
-import NavbarChild3 from "./NavbarChild3";
+import MenuNavbar from "./MenuNavbar";
+import LogoNavbar from "./LogoNavbar";
 
 function Navbar() {
   const [menu, setStatus] = useState(false);
@@ -31,9 +31,10 @@ function Navbar() {
             backgroundColor: menu ? "darkblue" : "#d3d3d3",
             fontSize: "30px",
           }}
-        ></i> <label className="badgeCustom">Switch</label>
+        ></i>{" "}
+        <label className="badgeCustom">Switch</label>
       </h1>
-      {menu ? <NavbarChild2 /> : <NavbarChild3 />}
+      {menu ? <MenuNavbar /> : <LogoNavbar />}
     </nav>
   );
 }
