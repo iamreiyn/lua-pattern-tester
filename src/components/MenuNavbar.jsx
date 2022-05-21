@@ -1,4 +1,4 @@
-export default function Navbar2() {
+export default function MenuNavbar() {
   return (
     <>
       <button
@@ -17,11 +17,11 @@ export default function Navbar2() {
         className="collapse navbar-collapse mx-5"
         id="navbarSupportedContent"
       >
-        <ul className="navbar-nav mr-auto" style={{ marginLeft: "23rem" }}>
+        <ul className="navbar-nav mr-auto" style={{ marginLeft: "20rem" }}>
           <li className="nav-item active">
             <a className="nav-link active" aria-current="page" href="/">
-              <i className="fa fa-house-user" style={{ fontSize: "20px" }}></i>{" "}
-              Home
+              <i className="fa fa-house-user" style={{ fontSize: "20px" }}></i>
+              {" "} Home
             </a>
           </li>
           <li className="nav-item">
@@ -31,7 +31,7 @@ export default function Navbar2() {
               rel="noreferrer"
               href="https://github.com/renisal/lua-pattern-tester/fork"
             >
-              <i className="fa fa-user" style={{ fontSize: "20px" }}></i> Fork
+              <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i> Fork
             </a>
           </li>
           <li className="nav-item">
@@ -41,8 +41,19 @@ export default function Navbar2() {
               rel="noreferrer"
               href="https://github.com/renisal/lua-pattern-tester/issues/new/choose"
             >
-              <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i>{" "}
+              <i className="fa fa-edit" style={{ fontSize: "20px" }}></i>{" "}
               Issue
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              target="_blank"
+              rel="noreferrer"
+              href="https://renisal.github.io/regex-validator"
+            >
+              <i className="fa fa-dollar" style={{ fontSize: "20px" }}></i>{" "}
+              Regex
             </a>
           </li>
           <li className="nav-item">

@@ -21,20 +21,13 @@ mark {
   left: 52rem;
 }
 
-.active {
-  background: rgb(24, 27, 39);
-  border-radius: 20%;
-  color: #d3d3d3;
-  margin-right: 5px;
-}
-
 .badgeCustom {
-    font-size: xx-small;
-color: #d3d3d3;
-    position: relative;
-    bottom: 23px;
-    left: -10px;
-  }
+  font-size: xx-small;
+  color: #d3d3d3;
+  position: relative;
+  bottom: 23px;
+  left: -10px;
+}
 
 a:hover {
   color: green;
