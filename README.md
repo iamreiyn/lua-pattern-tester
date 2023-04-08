@@ -1,6 +1,6 @@
 # Lua Pattern Tester
 A lua patterns validating application powered by react<br>
-**Online demo: https://renisal.github.io/lua-pattern-tester**
+**Online demo: https://montymahato.github.io/lua-pattern-tester**
 
 <img target="_blank" src="https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,react" height="50px" width="300px"><br>
 and **[Fengari Web](https://github.com/fengari-lua/fengari-web)** for emulating Lua.
