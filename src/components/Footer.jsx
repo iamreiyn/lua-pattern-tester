@@ -1,11 +1,11 @@
 function Footer() {
   return (
     <div>
-      <ul className="list-group list-group-flush my-5">
+      <ul className="list-group list-group-flush">
         <center style={{ color: "#d3d3d3" }}>
           <a
             style={{ color: "lightblue", textDecoration: "none" }}
-            href="https://github.com/renisal/lua-pattern-tester"
+            href="https://github.com/montymahato/lua-pattern-tester"
           >
             Lua Pattern Tester:
           </a>{" "}

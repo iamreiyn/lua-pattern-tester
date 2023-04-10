@@ -13,10 +13,10 @@ function Navbar() {
   }
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-dark bg-dark"
+      className="navbar navbar-expand-lg navbar-dark bg-light"
       style={{ marginTop: "50px" }}
     >
-      <h1 className="text-white try">
+      <h1 style={{marginLeft: "12.6%"}} className="text-white try">
         <i
           onClick={switchMenu}
           className="fa fa-random"
@@ -32,7 +32,7 @@ function Navbar() {
             fontSize: "30px",
           }}
         ></i>{" "}
-        <label className="badgeCustom">Switch</label>
+        <label className="badgeCustom">Menu</label>
       </h1>
       {menu ? <MenuNavbar /> : <LogoNavbar />}
     </nav>

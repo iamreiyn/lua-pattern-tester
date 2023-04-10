@@ -8,7 +8,7 @@ export default function LogoNavbar() {
           borderRadius: "50%",
           paddingTop: "10px",
           paddingBottom: "10px",
-          marginLeft: "450px",
+          marginLeft: "36%",
         }}
       >
         Lua
