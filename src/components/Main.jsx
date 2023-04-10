@@ -40,8 +40,8 @@ function Main() {
           id="patterns"
           type="text"
           className="form-control"
-          placeholder="Lua Patterns (e.g. "
-          aria-label="Lua Patterns (e.g "
+          placeholder="Lua Patterns (e.g. %d+ to match numbers)"
+          aria-label="Lua Patterns (e.g. %d+ to match numbers)"
           aria-describedby="basic-addon2"
         />
         <div className="input-group-append">
