@@ -29,7 +29,7 @@ export default function MenuNavbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/renisal/lua-pattern-tester/fork"
+              href="https://github.com/montymahato/lua-pattern-tester/fork"
             >
               <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i> Fork
             </a>
@@ -39,7 +39,7 @@ export default function MenuNavbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/renisal/lua-pattern-tester/issues/new/choose"
+              href="https://github.com/montymahato/lua-pattern-tester/issues/new/choose"
             >
               <i className="fa fa-edit" style={{ fontSize: "20px" }}></i>{" "}
               Issue
@@ -50,7 +50,7 @@ export default function MenuNavbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://renisal.github.io/regex-validator"
+              href="https://montymahato.github.io/regex-validator"
             >
               <i className="fa fa-dollar" style={{ fontSize: "20px" }}></i>{" "}
               Regex
@@ -61,7 +61,7 @@ export default function MenuNavbar() {
               className="nav-link mx-5"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/renisal"
+              href="https://github.com/montymahato"
             >
               {" "}
               by{" "}

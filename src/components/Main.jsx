@@ -40,8 +40,8 @@ function Main() {
           id="patterns"
           type="text"
           className="form-control"
-          placeholder="Lua Patterns"
-          aria-label="Lua Patterns"
+          placeholder="Lua Patterns (e.g. "
+          aria-label="Lua Patterns (e.g "
           aria-describedby="basic-addon2"
         />
         <div className="input-group-append">
@@ -67,11 +67,11 @@ function Main() {
           style={{
             resize: "none",
             width: "50rem",
-            borderColor: "#222428",
+            
             backgroundColor: "#d3d3d3",
           }}
-          placeholder="Enter your string here to be matched"
-          aria-label="Enter your string here to be matched"
+          placeholder="Enter your text here to be matched"
+          aria-label="Enter your text here to be matched"
           className="form-control"
           id="myBoxwhite"
           rows="8"
@@ -97,7 +97,7 @@ function Main() {
                 caseSensitive={true}
                 autoEscape={true}
                 textToHighlight={
-                  string ? string : "Your result will be displayed here"
+                  string ? string : "Your result will be displayed here; currently no matches"
                 }
               />
             </p>
