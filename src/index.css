@@ -4,39 +4,12 @@ body {
   background: rgb(24, 27, 39);
 }
 mark {
-  background: rgb(24, 27, 39);
+  background: rgb(0, 30, 151);
   color: #d3d3d3;
 }
 
 .center {
-  margin: auto;
-  width: 40%;
-  border: 3px;
-  padding: 10px;
-  margin-top: 100px;
-}
-
-.try {
-  position: absolute;
-  left: 52rem;
-}
-
-.badgeCustom {
-  font-size: xx-small;
-  color: #d3d3d3;
-  position: relative;
-  bottom: 23px;
-  left: -10px;
-}
-
-a:hover {
-  color: green;
-}
-
-[contenteditable] {
-  outline: 0px solid transparent;
-}
-
-strong {
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

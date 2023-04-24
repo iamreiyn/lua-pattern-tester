@@ -32,11 +32,12 @@ function Main() {
   };
 
   return (
-    <div className="container my-4 center">
-      <div style={{ width: "685px" }} className="input-group mb-3">
+    <>
+    <div className="center">
+      <div style={{ width: "690px", marginTop: "5vh" }} className="input-group mb-3">
         <input
           onChange={onChangePatterns}
-          style={{ backgroundColor: "#d3d3d3" }}
+          style={{ backgroundColor: "#313537",  borderColor: "#313537", color: "#d3d3d3" }}
           id="patterns"
           type="text"
           className="form-control"
@@ -51,8 +52,9 @@ function Main() {
             style={{
               borderBottomLeftRadius: "0px",
               borderTopLeftRadius: "0px",
-              backgroundColor: "#d3d3d3",
-              color: string.match(result[0]) ? "green" : "blue",
+              backgroundColor: "#313537",
+              borderColor: "#313537",
+              color: string.match(result[0]) ? "green" : "red",
             }}
           >
             <strong>
@@ -61,51 +63,56 @@ function Main() {
           </span>
         </div>
       </div>
-      <div style={{ display: "flex", width: "700px" }}>
-        <textarea
-          onChange={onChangeString}
-          style={{
-            resize: "none",
-            width: "50rem",
-            
-            backgroundColor: "#d3d3d3",
-          }}
-          placeholder="Enter your text here to be matched"
-          aria-label="Enter your text here to be matched"
-          className="form-control"
-          id="myBoxwhite"
-          rows="8"
-        ></textarea>
-
-        <div
-          className="card mx-3"
-          style={{
-            backgroundColor: "#d3d3d3",
-            width: "50rem",
-            height: "20rem",
-          }}
-        >
-          <div className="card-body">
-            <p
-              className="card-text"
-              style={{ marginTop: "-10px", marginLeft: "-3px" }}
-            >
-              <Highlighter
-                style={{ color: string ? "black" : "#696969" }}
-                highlightClassName="highlitedString"
-                searchWords={result.split("ˍ")}
-                caseSensitive={true}
-                autoEscape={true}
-                textToHighlight={
-                  string ? string : "Your result will be displayed here; currently no matches"
-                }
-              />
-            </p>
-          </div>
-        </div>
-      </div>
       <p></p>
     </div>
+
+            <div className="center">
+    <div style={{ display: "flex", width: "700px" }}>
+    <textarea
+      onChange={onChangeString}
+      style={{
+        resize: "none",
+        width: "50%",
+        borderColor: "#313537",
+        backgroundColor: "#313537",
+        color: "#d3d3d3"
+      }}
+      placeholder="Enter your text here to be matched"
+      aria-label="Enter your text here to be matched"
+      className="form-control"
+      id="myBoxwhite"
+      rows="8"
+    ></textarea>
+
+    <div
+      className="card mx-3"
+      style={{
+        backgroundColor: "#313537",
+        width: "50%",
+        height: "20rem",
+      }}
+    >
+      <div className="card-body">
+        <p
+          className="card-text"
+          style={{ marginTop: "-10px", marginLeft: "-3px" }}
+        >
+          <Highlighter
+            style={{ color: string ? "#d3d3d3" : "#696969" }}
+            highlightClassName="highlitedString"
+            searchWords={result.split("ˍ")}
+            caseSensitive={true}
+            autoEscape={true}
+            textToHighlight={
+              string ? string : "Your result will be displayed here; currently no matches"
+            }
+          />
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </>
   );
 }
 
