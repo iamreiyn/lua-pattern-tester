@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <div>
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush my-5">
         <center style={{ color: "#d3d3d3" }}>
           <a
             style={{ color: "lightblue", textDecoration: "none" }}
@@ -15,7 +15,7 @@ function Footer() {
           <img
             className="mx-3 my-2"
             src="https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,react"
-            width="200"
+            width="300"
             height="35"
             alt="langs"
           />
