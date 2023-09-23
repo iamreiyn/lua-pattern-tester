@@ -46,9 +46,9 @@ function Navbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/montymahato/lua-pattern-tester/fork"
+              href="https://github.com/montymahato/lua-pattern-tester"
             >
-              <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i><br></br>  Fork
+              <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i><br></br>  Source
             </a>
           </li>
           <li className="nav-item">
@@ -67,10 +67,10 @@ function Navbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://montymahato.github.io/regex-validator"
+              href="https://www.lua.org/pil/20.2.html"
             >
-              <i className="fa fa-dollar" style={{ fontSize: "20px" }}></i>{" "}
-              <br></br>  Regex
+              <i className="fa fa-book" style={{ fontSize: "20px" }}></i>{" "}
+              <br></br>  Wiki
             </a>
           </li>
           <li className="nav-item">
