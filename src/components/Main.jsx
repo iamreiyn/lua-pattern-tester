@@ -10,34 +10,30 @@ function Main() {
   const onChangePatterns = (event) => {
     const newPattern = event.target.value;
     setPat(newPattern);
-
-    const escapedPattern = newPattern.replace('/', '\\/');
-
+  
     let func = fengari.load(`return function(string, pattern)
       local r1, r2, r3, r4, r5, r6, r7, r8, r9, r10 = string.match(string, pattern)
       total = string.format("%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%s", r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11)
       return total
     end`)();
-
-    let ret = func.call(string, escapedPattern);
+  
+    let ret = func.call(string, newPattern);
     setResult(ret);
   };
-
+  
   const onChangeString = (event) => {
     const newString = event.target.value;
     setString(newString);
-
-    const escapedPattern = pattern.replace('/', '\\/');
-
+  
     let func = fengari.load(`return function(string, pattern)
-    local r1, r2, r3, r4, r5, r6, r7, r8, r9, r10 = string.match(string, pattern)
-    total = string.format("%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%s", r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11)
+      local r1, r2, r3, r4, r5, r6, r7, r8, r9, r10 = string.match(string, pattern)
+      total = string.format("%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%sˍ%s", r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11)
       return total
     end`)();
-
-    let ret = func.call(newString, escapedPattern);
+  
+    let ret = func.call(newString, pattern);
     setResult(ret);
-  };
+  };  
 
   return (
     <>
