@@ -6,7 +6,6 @@ function Main() {
   const [string, setString] = useState("");
   const [result, setResult] = useState("ˍnilˍ");
   const [pattern, setPat] = useState("");
-
   const onChangePatterns = (event) => {
     const newPattern = event.target.value;
     setPat(newPattern);
@@ -20,7 +19,6 @@ function Main() {
     let ret = func.call(string, newPattern);
     setResult(ret);
   };
-  
   const onChangeString = (event) => {
     const newString = event.target.value;
     setString(newString);
@@ -119,5 +117,4 @@ function Main() {
   </>
   );
 }
-
 export default Main;
