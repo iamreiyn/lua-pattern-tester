@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/lua-pattern-tester/static/css/main.d861d92f.css",
-    "main.js": "/lua-pattern-tester/static/js/main.e39558e2.js",
+    "main.js": "/lua-pattern-tester/static/js/main.9f0e94cb.js",
     "index.html": "/lua-pattern-tester/index.html",
     "main.d861d92f.css.map": "/lua-pattern-tester/static/css/main.d861d92f.css.map",
-    "main.e39558e2.js.map": "/lua-pattern-tester/static/js/main.e39558e2.js.map"
+    "main.9f0e94cb.js.map": "/lua-pattern-tester/static/js/main.9f0e94cb.js.map"
   },
   "entrypoints": [
     "static/css/main.d861d92f.css",
-    "static/js/main.e39558e2.js"
+    "static/js/main.9f0e94cb.js"
   ]
 }
