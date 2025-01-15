@@ -5,7 +5,7 @@ function Footer() {
         <center style={{ color: "#d3d3d3" }}>
           <a
             style={{ color: "lightblue", textDecoration: "none" }}
-            href="https://github.com/montymahato/lua-pattern-tester"
+            href="https://github.com/reiyncode/lua-pattern-tester"
           >
             Lua Pattern Tester:
           </a>{" "}

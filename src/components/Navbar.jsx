@@ -46,7 +46,7 @@ function Navbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/montymahato/lua-pattern-tester"
+              href="https://github.com/reiyncode/lua-pattern-tester"
             >
               <i className="fa fa-code-fork" style={{ fontSize: "20px" }}></i><br></br>  Source
             </a>
@@ -56,7 +56,7 @@ function Navbar() {
               className="nav-link"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/montymahato/lua-pattern-tester/issues/new/choose"
+              href="https://github.com/reiyncode/lua-pattern-tester/issues/new/choose"
             >
               <i className="fa fa-edit" style={{ fontSize: "20px" }}></i>{" "}
               <br></br>  Issue
@@ -78,7 +78,7 @@ function Navbar() {
               className="nav-link mx-5"
               target="_blank"
               rel="noreferrer"
-              href="https://github.com/montymahato"
+              href="https://github.com/reiyncode"
             >
             
             </a>
