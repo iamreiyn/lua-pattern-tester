@@ -1,19 +1,20 @@
 # Lua Pattern Tester - Build, test & debug lua patterns live!
 
-![App Screenshot](https://i.imgur.com/I2E8r9n.png)
+![App Screenshot](https://i.imgur.com/ZNhbrAd.png)
 
 ## Description
 
 This is a web-based application built using React, Bootstrap, Node.js, HTML, CSS, JavaScript, and the [fengari-web](https://github.com/fengari-lua/fengari-web) library.<br>
 Based on a simple interface for testing and debugging Lua patterns against your provided input.
 
-#### Visit website: https://reiyncode.github.io/lua-pattern-tester
+#### Visit website: https://iamreiyn.github.io/lua-pattern-tester
 
 ## Features
 
 - **Pattern Testing**: Enter Lua patterns and input strings to test pattern matching.
 - **Pattern Debugging**: Debug and visualize Lua patterns to understand their behavior.
 - **Syntax Highlighting**: Syntax highlighting for Lua patterns and matched strings.
+- **Captured Groups**: Highlights and mentions the various captured groups differently.
 - **Responsive Design**: A responsive and simple user interface.
 
 ## Contributing
