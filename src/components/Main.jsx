@@ -1,121 +1,361 @@
-const { useState } = require("react");
-const fengari = require("fengari-web");
+import { useState, useRef, useCallback, useEffect } from "react";
+import { MATCH_COLORS, QUICK_REFERENCE } from "../utils/constants";
+import { breakdownPattern } from "../utils/patternBreakdown";
+import { executeLuaPattern } from "../utils/luaEngine";
 
 function Main() {
-  const [string, setString] = useState("");
-  const [result, setResult] = useState("");
+  const [inputText, setInputText] = useState("");
   const [pattern, setPattern] = useState("");
+  const [mode, setMode] = useState("gmatch");
+  const [gsubRepl, setGsubRepl] = useState("");
+  const [matches, setMatches] = useState([]);
+  const [error, setError] = useState("");
+  const [gsubResult, setGsubResult] = useState("");
+  const [collapsed, setCollapsed] = useState({});
+  const editorRef = useRef(null);
+  const highlightRef = useRef(null);
+  const lineNumbersRef = useRef(null);
 
-  const executeLuaFunction = (inputString, inputPattern) => {
-    try {
-      let func = fengari.load(`
-        return function(inputString, inputPattern)
-          local captures = { string.match(inputString, inputPattern) }
-          if #captures == 0 then return "" end
-          return table.concat(captures, "ˍ")
-        end`)();
-      
-      fengari.lua_print = (...args) => console.log("Lua Output:", ...args);
-      const luaResult = func.call(inputString, inputPattern);
-      console.log("Processed Lua Result:", luaResult);
-      return luaResult;
-    } catch (error) {
-      console.error("Lua execution error:", error);
-      return "Error: Invalid pattern or input";
-    }};
+  // scroll sync for the highlight overlay and line numbers
+  const onEditorScroll = useCallback(() => {
+    if (editorRef.current) {
+      if (highlightRef.current) {
+        highlightRef.current.scrollTop = editorRef.current.scrollTop;
+        highlightRef.current.scrollLeft = editorRef.current.scrollLeft;
+      }
+      if (lineNumbersRef.current) {
+        lineNumbersRef.current.scrollTop = editorRef.current.scrollTop;
+      }
+    }
+  }, []);
 
-  const onChangeString = (event) => {
-    const newString = event.target.value.trim();
-    setString(newString);
-    setResult(executeLuaFunction(newString, pattern));
+  // update matches whenever inputs change
+  useEffect(() => {
+    const { matches: newMatches, gsubOutput, error: newError } = executeLuaPattern(
+      inputText,
+      pattern,
+      mode,
+      gsubRepl
+    );
+    setMatches(newMatches);
+    setGsubResult(gsubOutput);
+    setError(newError);
+  }, [inputText, pattern, mode, gsubRepl]);
+
+
+
+  const lines = inputText.split("\n");
+  const lineCount = Math.max(lines.length, 20);
+
+  const getHighlightedLines = () => {
+    const highlighted = new Set();
+    for (const m of matches) {
+      // Convert 1-indexed char positions to line numbers
+      let charCount = 0;
+      for (let i = 0; i < lines.length; i++) {
+        const lineStart = charCount + 1;
+        const lineEnd = charCount + lines[i].length;
+        if (m.startIdx <= lineEnd + 1 && m.endIdx >= lineStart) {
+          highlighted.add(i);
+        }
+        charCount += lines[i].length + 1; // +1 for \n
+      }
+    }
+    return highlighted;
   };
 
-  const onChangePatterns = (event) => {
-    const newPattern = event.target.value.trim();
-    setPattern(newPattern);
-    setResult(executeLuaFunction(string, newPattern));
-  };
+  const highlightedLines = getHighlightedLines();
 
-  const colors = ["#ff4c4c", "#4cff4c", "#4c4cff", "#ffcc00", "#ff66ff"];
+  // create the highlight overlay
+  const buildHighlightOverlay = () => {
+    if (matches.length === 0) return inputText;
 
-  const highlightMatches = (text, matches) => {
-    let lastIndex = 0;
-    let coloredText = [];
+    // Sort matches by start index
+    const sorted = [...matches].sort((a, b) => a.startIdx - b.startIdx);
+    const elements = [];
+    let lastEnd = 0;
 
-    matches.forEach((word, index) => {
-      const start = text.indexOf(word, lastIndex);
-      if (start === -1) return;
-      const end = start + word.length;
-      coloredText.push(text.substring(lastIndex, start));
-      coloredText.push(
-        <span key={index} style={{ backgroundColor: colors[index % colors.length], padding: "2px 4px", borderRadius: "3px" }}>
-          {word}
-        </span>
+    sorted.forEach((match, matchIndex) => {
+      const start = match.startIdx - 1; // Convert to 0-indexed
+      const end = match.endIdx;
+      const colorClass = `hl-match-${matchIndex % MATCH_COLORS.length}`;
+
+      // Text before this match
+      if (start > lastEnd) {
+        elements.push(inputText.substring(lastEnd, start));
+      }
+
+      // The matched text with highlight
+      elements.push(
+        <mark key={matchIndex} className={`hl-match ${colorClass}`}>
+          {inputText.substring(start, end)}
+        </mark>
       );
-      lastIndex = end;
+
+      lastEnd = end;
     });
-    coloredText.push(text.substring(lastIndex));
-    return coloredText;
+
+    // Remaining text
+    if (lastEnd < inputText.length) {
+      elements.push(inputText.substring(lastEnd));
+    }
+
+    return elements;
   };
+
+  // ui state helpers
+  const toggleCollapse = (index) => {
+    setCollapsed((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+
+  const copyMatch = (text) => {
+    navigator.clipboard.writeText(text).catch(() => { });
+  };
+
+  const patternTokens = breakdownPattern(pattern);
 
   return (
-    <>
-      <div className="center">
-        <div style={{ width: "690px", marginTop: "5vh" }} className="input-group mb-3">
+    <main className="main-content">
+      {/* Pattern Input Bar */}
+      <div className="pattern-bar">
+        <div className="pattern-input-wrapper">
           <input
-            onChange={onChangePatterns}
-            style={{ backgroundColor: "#313537", borderColor: "#313537", color: "#d3d3d3" }}
-            id="patterns"
             type="text"
-            className="form-control"
-            placeholder="Lua Patterns (e.g. %d+ to match numbers)"
-            aria-label="Lua Patterns"
-            aria-describedby="basic-addon2"/>
-          <div className="input-group-append">
-            <span className="input-group-text" id="basic-addon2" style={{
-              borderBottomLeftRadius: "0px",
-              borderTopLeftRadius: "0px",
-              backgroundColor: "#313537",
-              borderColor: "#313537",
-              color: result && result !== "Error: Invalid pattern or input" ? "green" : "red"
-            }}>
-              <strong>{result && result !== "Error: Invalid pattern or input" ? "Matches" : "No Matches"}</strong>
-            </span>
-          </div>
+            className="pattern-input"
+            placeholder="Enter Lua pattern (e.g. (%d+)%.(%d+))"
+            value={pattern}
+            onChange={(e) => setPattern(e.target.value)}
+            id="pattern-input"
+            spellCheck={false}
+          />
+        </div>
+        <div className="mode-tabs">
+          {["match", "gmatch", "find", "gsub"].map((m) => (
+            <button
+              key={m}
+              className={`mode-tab ${mode === m ? "active" : ""}`}
+              onClick={() => setMode(m)}
+            >
+              {m}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="center">
-        <div style={{ display: "flex", width: "700px" }}>
-          <textarea
-            onChange={onChangeString}
-            style={{ resize: "none", width: "50%", borderColor: "#313537", backgroundColor: "#313537", color: "#d3d3d3" }}
-            placeholder="Enter your text here"
-            className="form-control"
-            rows="8"/>
-          <div className="card mx-3" style={{ backgroundColor: "#313537", width: "50%", height: "20rem" }}>
-            <div className="card-body">
-              <p className="card-text" style={{ color: "#d3d3d3" }}>
-                {highlightMatches(string || "Your result will be displayed here; currently no matches", result.split("ˍ").filter(word => word.trim() !== ""))}
-              </p>
+      {/* gsub replacement input */}
+      {mode === "gsub" && (
+        <div className="gsub-section">
+          <div className="gsub-label">Replacement String</div>
+          <input
+            type="text"
+            className="gsub-input"
+            placeholder='e.g. %1-%2 or "replaced"'
+            value={gsubRepl}
+            onChange={(e) => setGsubRepl(e.target.value)}
+            spellCheck={false}
+          />
+        </div>
+      )}
+
+      {/* Workspace */}
+      <div className="workspace">
+        {/* Editor Panel */}
+        <div className="editor-panel">
+          {/* Editor Header with stats */}
+          <div className="editor-header">
+            <span className="editor-header-label"><i className="fa-solid fa-keyboard"></i> TEST STRING</span>
+            <span className="editor-header-stats">
+              {lines.length} {lines.length === 1 ? "line" : "lines"}
+              {matches.length > 0 && (
+                <> · {matches.length} {matches.length === 1 ? "match" : "matches"}</>
+              )}
+            </span>
+          </div>
+
+          <div className="editor-container">
+            <div className="line-numbers" ref={lineNumbersRef}>
+              {Array.from({ length: lineCount }, (_, i) => (
+                <div
+                  key={i}
+                  className={`line-number ${highlightedLines.has(i) ? "highlighted" : ""}`}
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </div>
+            <div className="editor-content">
+              <div className="editor-highlights" ref={highlightRef}>
+                {buildHighlightOverlay()}
+              </div>
+              <textarea
+                ref={editorRef}
+                className="editor-textarea"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onScroll={onEditorScroll}
+                placeholder="Enter your test string here..."
+                spellCheck={false}
+              />
+            </div>
+          </div>
+
+          {/* Pattern Breakdown */}
+          {patternTokens.length > 0 && (
+            <div className="pattern-breakdown">
+              <div className="breakdown-label"><i className="fa-solid fa-circle-info"></i> PATTERN BREAKDOWN</div>
+              <div className="breakdown-tokens">
+                {patternTokens.map((tok, i) => (
+                  <div key={i} className="breakdown-token">
+                    <span className="breakdown-token-raw">{tok.raw}</span>
+                    <span className="breakdown-token-desc">{tok.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Results Panel */}
+        <div className="results-panel">
+          <div className="results-header">
+            <span><i className="fa-solid fa-circle-check"></i> Results</span>
+            {matches.length > 0 ? (
+              <span className="results-count-badge">
+                {matches.length} found
+              </span>
+            ) : (
+              <span className="results-count">(0 found)</span>
+            )}
+          </div>
+
+          {error && (
+            <div className="error-banner">
+              <span className="error-icon">⚠</span>
+              <span>{error}</span>
+            </div>
+          )}
+
+          <div className="results-body">
+            {matches.length === 0 && !error && (
+              <div className="empty-state">
+                <div className="empty-state-icon"><i className="fa fa-search"></i></div>
+                <div className="empty-state-title">No matches yet</div>
+                <div className="empty-state-text">
+                  Enter a pattern and some text to see results
+                </div>
+              </div>
+            )}
+
+            {matches.map((match, index) => {
+              const isOpen = !collapsed[index];
+              const color = MATCH_COLORS[index % MATCH_COLORS.length];
+
+              return (
+                <div
+                  key={index}
+                  className="match-card"
+                  style={{ borderLeftColor: color }}
+                >
+                  <div
+                    className="match-card-header"
+                    onClick={() => toggleCollapse(index)}
+                  >
+                    <div className="match-card-title">
+                      <span
+                        className={`match-card-toggle ${isOpen ? "open" : ""}`}
+                      >
+                        ▼
+                      </span>
+                      <span className="match-card-label">
+                        Match {index + 1}
+                      </span>
+                      <span className="match-card-range">
+                        pos {match.startIdx} → {match.endIdx}
+                      </span>
+                    </div>
+                    <div className="match-card-actions">
+                      <button
+                        className="match-card-btn"
+                        title="Copy full match"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyMatch(match.fullMatch);
+                        }}
+                      >
+                        <i className="fa fa-copy"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {isOpen && (
+                    <div className="match-card-body">
+                      <div className="match-row">
+                        <span className="match-row-label">FULL MATCH</span>
+                        <span className="match-full-value">
+                          {match.fullMatch}
+                        </span>
+                      </div>
+
+                      {match.captures.map((cap, capIdx) => (
+                        <div className="match-row" key={capIdx}>
+                          <span className="match-row-label">
+                            <span className="group-badge" style={{ background: MATCH_COLORS[capIdx % MATCH_COLORS.length] }}>
+                              Group {capIdx + 1}
+                            </span>
+                            <span className={`capture-type-label ${cap.type}`}>
+                              {cap.type === "pos" ? "Position" : "Content"}
+                            </span>
+                          </span>
+                          <span className="match-row-value">
+                            {cap.type === "pos" ? (
+                              <span className="capture-type-pos">
+                                <span className="pin">📍</span> {cap.value}
+                              </span>
+                            ) : (
+                              cap.value
+                            )}
+                          </span>
+                        </div>
+                      ))}
+
+                      {match.captures.length === 0 && (
+                        <div className="match-row">
+                          <span className="match-row-label" style={{ color: "var(--text-muted)", fontStyle: "italic" }}>
+                            No capture groups in pattern
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* gsub output */}
+          {mode === "gsub" && gsubResult && (
+            <div className="gsub-section">
+              <div className="gsub-label">gsub Output</div>
+              <div className="gsub-output">{gsubResult}</div>
+            </div>
+          )}
+
+          {/* Quick Reference */}
+          <div className="quick-reference">
+            <div className="qr-label"><i className="fa-solid fa-circle-question"></i> QUICK REFERENCE</div>
+            <div className="qr-grid">
+              {QUICK_REFERENCE.map((item, i) => (
+                <div key={i} className="qr-row">
+                  <span className="qr-token">{item.token}</span>
+                  <span className="qr-desc">{item.desc}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-
-      <div className="center" style={{ marginTop: "30px", textAlign: "center" }}>
-        <h4 style={{ color: "#d3d3d3" }}>Captured Groups:</h4>
-        {result && result !== "Error: Invalid pattern or input" ? (
-          result.split("ˍ").map((match, index) => (
-            <p key={index} style={{ color: "#ffcc00", display: "flex", flexDirection: "column", margin: "10px"}}>
-              <strong>Capture {index + 1}:</strong> <span style={{ color: "#14fc1c" }}>{match}</span>
-            </p>
-          ))
-        ) : (
-          <p style={{ color: "#d3d3d3" }}>No matches found</p>
-        )}
-      </div>
-    </>
+    </main>
   );
 }
 

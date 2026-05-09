@@ -1,10 +1,27 @@
-Your contribution will be appreciated. I made this website solely for learning purposes and possibly help out myself with my daily tasks and some of my friends, then thought to publish on Github. Feel free to leave your contributions and opinions.
+# Contributing 🌙
 
+Thanks for wanting to help out! I originally made this for myself and some friends, but I'm happy to see others using it. 
 
+Whether it's a bug fix or just a cool UI idea, feel free to drop it in.
 
-It can be related to anything, be it:
+### The Stack
+- **React + Vite** for the frontend.
+- **Vanilla CSS** for all the styling (check `src/index.css`).
+- **Fengari** handles the Lua logic right in the browser.
 
-- Optimizing functions or files
-- Improving by a bit to recreating a file with a better approach
-- Reporting any bugs within the project
-- Just create a pull request or issue according to its context and I'll surely check it out!
+### Local Setup
+1. Fork and clone the repo.
+2. `npm install` to get the dependencies.
+3. `npm run dev` to start the dev server.
+
+### How to help
+- **Bugs**: If something breaks, open an issue. Try to include the pattern and text you were using so I can reproduce it.
+- **Features**: If you have an idea, let me know!
+- **PRs**:
+    1. Make a branch for your change.
+    2. Try to use the CSS variables in `index.css` so colors stay consistent.
+    3. Keep logic modular.
+    4. Open the PR!
+
+Thanks!
+

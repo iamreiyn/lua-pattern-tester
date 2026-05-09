@@ -1,12 +1,19 @@
 ---
-name: PULL_REQUEST_TEMPLATE
-about: Create a pull request for this project
+name: Pull Request
+about: Create a pull request to contribute to Lua Pattern Tester
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
-# Description
+## Description
+A brief summary of what this PR does (e.g., "Added a new token to the cheatsheet" or "Fixed a bug with gsub execution").
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+## Type of Change
+- [ ] 🐛 Bug fix
+- [ ] ✨ New feature
+- [ ] 🎨 UI/UX improvement
+- [ ] 📝 Documentation update
+
+## Testing
+Briefly describe how you tested your changes to ensure they work as expected.
