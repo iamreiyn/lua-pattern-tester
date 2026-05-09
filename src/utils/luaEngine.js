@@ -94,6 +94,26 @@ const LUA_TEMPLATES = {
     end`,
 };
 
+// Helper to handle Lua-style backslash escapes in the pattern input
+// This allows users to use \n, \t, \32, etc. just like in a Lua string literal.
+function unescapeLuaPattern(pattern) {
+  if (!pattern) return "";
+  return pattern
+    .replace(/\\(\d{1,3})/g, (match, p1) => {
+      const charCode = parseInt(p1, 10);
+      return charCode <= 255 ? String.fromCharCode(charCode) : match;
+    })
+    .replace(/\\x([0-9a-fA-F]{2})/g, (match, p1) => {
+      return String.fromCharCode(parseInt(p1, 16));
+    })
+    .replace(/\\n/g, "\n")
+    .replace(/\\t/g, "\t")
+    .replace(/\\r/g, "\r")
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .replace(/\\\\/g, "\\");
+}
+
 // Helpers to parse the results from Lua
 
 function parseRawResult(rawResult, text) {
@@ -141,10 +161,11 @@ export function executeLuaPattern(text, pattern, mode, replacement = "") {
       return { matches: [], gsubOutput: "", error: `Unknown mode: ${mode}` };
     }
 
+    const processedPattern = unescapeLuaPattern(pattern);
     const func = fengari.load(luaCode)();
     const rawResult = mode === "gsub"
-      ? func.call(text, pattern, replacement)
-      : func.call(text, pattern);
+      ? func.call(text, processedPattern, replacement)
+      : func.call(text, processedPattern);
 
     if (rawResult === "NO_MATCH") {
       return { matches: [], gsubOutput: "", error: "" };
