@@ -9,14 +9,14 @@ function describeQuantifier(q) {
 }
 
 const ESCAPE_MAP = {
-  "%a": "any letter",     "%A": "non-letter",
-  "%d": "any digit",      "%D": "non-digit",
-  "%w": "letter or digit","%W": "non-alphanumeric",
-  "%s": "whitespace",     "%S": "non-whitespace",
-  "%p": "punctuation",    "%P": "non-punctuation",
-  "%l": "lowercase",      "%L": "non-lowercase",
-  "%u": "uppercase",      "%U": "non-uppercase",
-  "%c": "control char",   "%C": "non-control",
+  "%a": "any letter", "%A": "non-letter",
+  "%d": "any digit", "%D": "non-digit",
+  "%w": "letter or digit", "%W": "non-alphanumeric",
+  "%s": "whitespace", "%S": "non-whitespace",
+  "%p": "punctuation", "%P": "non-punctuation",
+  "%l": "lowercase", "%L": "non-lowercase",
+  "%u": "uppercase", "%U": "non-uppercase",
+  "%c": "control char", "%C": "non-control",
 };
 
 function describeEscape(esc, q) {
@@ -109,6 +109,46 @@ export function breakdownPattern(pat) {
     if (pat[i] === "$" && i === pat.length - 1) {
       tokens.push({ raw: "$", desc: "end of string" });
       i++;
+      continue;
+    }
+
+    // Backslash escape sequence like \n, \32, \x20, etc etc
+    if (pat[i] === "\\") {
+      let j = i + 1;
+      let desc = "literal '\\'";
+
+      if (j < pat.length) {
+        const nextChar = pat[j];
+        if (nextChar === "n") { desc = "newline"; j++; }
+        else if (nextChar === "t") { desc = "tab"; j++; }
+        else if (nextChar === "r") { desc = "carriage return"; j++; }
+        else if (nextChar === '"') { desc = "literal '\"'"; j++; }
+        else if (nextChar === "'") { desc = "literal '\\''"; j++; }
+        else if (nextChar === "\\") { desc = "literal '\\'"; j++; }
+        else if (nextChar === "x" && j + 2 < pat.length && /^[0-9a-fA-F]{2}$/.test(pat.substring(j + 1, j + 3))) {
+          desc = `hex char ${pat.substring(j + 1, j + 3)}`;
+          j += 3;
+        }
+        else if (/^[0-9]$/.test(nextChar)) {
+          let numStr = nextChar;
+          j++;
+          while (j < pat.length && /^[0-9]$/.test(pat[j]) && numStr.length < 3) {
+            if (numStr.length === 2 && parseInt(numStr + pat[j], 10) > 255) break;
+            numStr += pat[j];
+            j++;
+          }
+          desc = `char code ${numStr}`;
+        }
+        else {
+          desc = `literal '${nextChar}'`;
+          j++;
+        }
+      }
+
+      const q = tryQuantifier(pat, j);
+      const raw = pat.substring(i, j) + q;
+      tokens.push({ raw, desc: desc + describeQuantifier(q) });
+      i = j + (q ? 1 : 0);
       continue;
     }
 
