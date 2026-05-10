@@ -1,11 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { MATCH_COLORS, QUICK_REFERENCE } from "../utils/constants";
+import { MATCH_COLORS, QUICK_REFERENCE, PATTERN_EXAMPLES } from "../utils/constants";
 import { breakdownPattern } from "../utils/patternBreakdown";
 import { executeLuaPattern } from "../utils/luaEngine";
 
-function Main() {
-  const [inputText, setInputText] = useState("");
-  const [pattern, setPattern] = useState("");
+function Main({ pattern, setPattern, inputText, setInputText }) {
   const [mode, setMode] = useState("gmatch");
   const [gsubRepl, setGsubRepl] = useState("");
   const [matches, setMatches] = useState([]);
@@ -15,17 +13,39 @@ function Main() {
   const editorRef = useRef(null);
   const highlightRef = useRef(null);
   const lineNumbersRef = useRef(null);
+  const patternInputRef = useRef(null);
+  const patternHighlightRef = useRef(null);
 
-  // scroll sync for the highlight overlay and line numbers
-  const onEditorScroll = useCallback(() => {
-    if (editorRef.current) {
-      if (highlightRef.current) {
-        highlightRef.current.scrollTop = editorRef.current.scrollTop;
-        highlightRef.current.scrollLeft = editorRef.current.scrollLeft;
-      }
-      if (lineNumbersRef.current) {
-        lineNumbersRef.current.scrollTop = editorRef.current.scrollTop;
-      }
+  const formatWhitespace = (text) => {
+    if (!text) return text;
+    return text.split(" ").map((part, i, arr) => (
+      <span key={i}>
+        {part}
+        {i < arr.length - 1 && (
+          <>
+            {" "}
+            <span className="whitespace-dot">●</span>
+          </>
+        )}
+      </span>
+    ));
+  };
+
+  const onPatternScroll = () => {
+    if (patternInputRef.current && patternHighlightRef.current) {
+      patternHighlightRef.current.scrollLeft = patternInputRef.current.scrollLeft;
+    }
+  };
+
+  // Sync pattern scroll when state changes
+  useEffect(() => {
+    onPatternScroll();
+  }, [pattern]);
+
+  // Focus pattern input on mount
+  useEffect(() => {
+    if (patternInputRef.current) {
+      patternInputRef.current.focus();
     }
   }, []);
 
@@ -45,7 +65,7 @@ function Main() {
 
 
   const lines = inputText.split("\n");
-  const lineCount = Math.max(lines.length, 20);
+  const lineCount = Math.max(lines.length, 10);
 
   const getHighlightedLines = () => {
     const highlighted = new Set();
@@ -68,7 +88,7 @@ function Main() {
 
   // create the highlight overlay
   const buildHighlightOverlay = () => {
-    if (matches.length === 0) return inputText;
+    if (matches.length === 0) return formatWhitespace(inputText);
 
     // Sort matches by start index
     const sorted = [...matches].sort((a, b) => a.startIdx - b.startIdx);
@@ -82,13 +102,13 @@ function Main() {
 
       // Text before this match
       if (start > lastEnd) {
-        elements.push(inputText.substring(lastEnd, start));
+        elements.push(<span key={`text-${matchIndex}`}>{formatWhitespace(inputText.substring(lastEnd, start))}</span>);
       }
 
       // The matched text with highlight
       elements.push(
         <mark key={matchIndex} className={`hl-match ${colorClass}`}>
-          {inputText.substring(start, end)}
+          {formatWhitespace(inputText.substring(start, end))}
         </mark>
       );
 
@@ -97,7 +117,7 @@ function Main() {
 
     // Remaining text
     if (lastEnd < inputText.length) {
-      elements.push(inputText.substring(lastEnd));
+      elements.push(<span key="last-text">{formatWhitespace(inputText.substring(lastEnd))}</span>);
     }
 
     return elements;
@@ -120,12 +140,17 @@ function Main() {
       {/* Pattern Input Bar */}
       <div className="pattern-bar">
         <div className="pattern-input-wrapper">
+          <div className="pattern-highlights" ref={patternHighlightRef}>
+            {formatWhitespace(pattern)}
+          </div>
           <input
+            ref={patternInputRef}
             type="text"
             className="pattern-input"
-            placeholder="Enter Lua pattern (e.g. (%d+)%.(%d+))"
+            placeholder="Enter your Lua pattern here"
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
+            onScroll={onPatternScroll}
             id="pattern-input"
             spellCheck={false}
           />
@@ -164,7 +189,7 @@ function Main() {
         <div className="editor-panel">
           {/* Editor Header with stats */}
           <div className="editor-header">
-            <span className="editor-header-label"><i className="fa-solid fa-keyboard"></i> TEST STRING</span>
+            <span className="editor-header-label"><i className="fa-solid fa-file-lines"></i> TEST STRING</span>
             <span className="editor-header-stats">
               {lines.length} {lines.length === 1 ? "line" : "lines"}
               {matches.length > 0 && (
@@ -193,10 +218,10 @@ function Main() {
                 className="editor-textarea"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                onScroll={onEditorScroll}
                 placeholder="Enter your test string here..."
                 spellCheck={false}
               />
+              <div className="editor-width-pusher">{inputText}</div>
             </div>
           </div>
 
@@ -340,19 +365,6 @@ function Main() {
               <div className="gsub-output">{gsubResult}</div>
             </div>
           )}
-
-          {/* Quick Reference */}
-          <div className="quick-reference">
-            <div className="qr-label"><i className="fa-solid fa-circle-question"></i> QUICK REFERENCE</div>
-            <div className="qr-grid">
-              {QUICK_REFERENCE.map((item, i) => (
-                <div key={i} className="qr-row">
-                  <span className="qr-token">{item.token}</span>
-                  <span className="qr-desc">{item.desc}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </main>

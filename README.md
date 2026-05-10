@@ -1,4 +1,4 @@
-# (.*) Lua Pattern Tester
+# Lua Pattern Tester
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](...)
 [![Stars](https://img.shields.io/github/stars/iamreiyn/lua-pattern-tester?style=social)](...)
@@ -16,6 +16,7 @@ Lua patterns are useful, but debugging them can be annoying. This tool helps you
 - **Pattern Testing**: Run your Lua patterns and test strings through `match`, `gmatch`, `find`, and `gsub`.
 - **Pattern Breakdown**: A custom parser that explains what your pattern is actually doing (captures, classes, etc).
 - **Real-time Highlighting**: See matches immediately as you type.
+- **Save/load**: Save/load your patterns and test strings.
 - **Group Extraction**: View exact string and position captures in color-coded cards.
 - **Responsive Design**: A responsive and simple user interface that's easy on the eyes.
 - **Quick Reference**: A small cheat sheet built right into the UI.
