@@ -19,7 +19,7 @@ const LUA_TEMPLATES = {
           table.insert(parts, "STR:" .. tostring(v))
         end
       end
-      return table.concat(parts, "\\t")
+      return table.concat(parts, "\\2")
     end`,
 
   gmatch: `
@@ -38,7 +38,7 @@ const LUA_TEMPLATES = {
             table.insert(parts, "STR:" .. tostring(v))
           end
         end
-        table.insert(all_matches, table.concat(parts, "\\t"))
+        table.insert(all_matches, table.concat(parts, "\\2"))
         if end_idx >= search_start then
           search_start = end_idx + 1
         else
@@ -46,7 +46,7 @@ const LUA_TEMPLATES = {
         end
       end
       if #all_matches == 0 then return "NO_MATCH" end
-      return table.concat(all_matches, "\\n")
+      return table.concat(all_matches, "\\1")
     end`,
 
   find: `
@@ -62,7 +62,7 @@ const LUA_TEMPLATES = {
           table.insert(parts, "STR:" .. tostring(v))
         end
       end
-      return table.concat(parts, "\\t")
+      return table.concat(parts, "\\2")
     end`,
 
   gsub: `
@@ -81,7 +81,7 @@ const LUA_TEMPLATES = {
             table.insert(parts, "STR:" .. tostring(v))
           end
         end
-        table.insert(all_matches, table.concat(parts, "\\t"))
+        table.insert(all_matches, table.concat(parts, "\\2"))
         if end_idx >= search_start then
           search_start = end_idx + 1
         else
@@ -90,7 +90,7 @@ const LUA_TEMPLATES = {
       end
       local gsub_result = string.gsub(inputString, inputPattern, replStr or "")
       if #all_matches == 0 then return "NO_MATCH" end
-      return table.concat(all_matches, "\\n") .. "\\nGSUB_RESULT\\t" .. gsub_result
+      return table.concat(all_matches, "\\1") .. "\\1GSUB_RESULT\\2" .. gsub_result
     end`,
 };
 
@@ -117,17 +117,19 @@ function unescapeLuaPattern(pattern) {
 // Helpers to parse the results from Lua
 
 function parseRawResult(rawResult, text) {
-  const lines = rawResult.split("\n");
   const matches = [];
   let gsubOutput = "";
 
-  for (const line of lines) {
-    if (line.startsWith("GSUB_RESULT\t")) {
-      gsubOutput = line.substring(12);
+  // using \x01 as match separatofr and \x02 as part separator
+  const matchEntries = rawResult.split("\x01");
+
+  for (const entry of matchEntries) {
+    if (entry.startsWith("GSUB_RESULT\x02")) {
+      gsubOutput = entry.substring(12);
       continue;
     }
 
-    const parts = line.split("\t");
+    const parts = entry.split("\x02");
     if (parts[0] !== "MATCH") continue;
 
     const startIdx = parseInt(parts[1], 10);

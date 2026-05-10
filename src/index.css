@@ -1009,6 +1009,7 @@ body {
   font-family: var(--font-mono);
   color: var(--text-primary);
   word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .match-row-value.quoted::before {
@@ -1029,6 +1030,7 @@ body {
   border-radius: var(--radius-sm);
   font-weight: 600;
   word-break: break-all;
+  white-space: pre-wrap;
 }
 
 /* Group Badges */
